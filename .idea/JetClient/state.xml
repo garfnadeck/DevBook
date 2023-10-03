@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JetClientState">
+    <option name="folders">
+      <list>
+        <folderState>
+          <option name="id" value="bc3edc20-310e-4172-a8a1-fe108ddc6f62" />
+          <option name="name" value="DevBook" />
+          <option name="requests">
+            <list>
+              <requestState>
+                <option name="id" value="8498b2e0-2091-4e72-9b56-941453be9cdf" />
+                <option name="method" value="POST" />
+                <option name="name" value="GetAllUsers" />
+                <option name="url" value="http://localhost:8080/user" />
+              </requestState>
+            </list>
+          </option>
+          <option name="sortWeight" value="1000000" />
+          <option name="syncProperties">
+            <synchronizationPropertiesState>
+              <option name="folderPath" value="D:\GolandProjects\api\.jetclient" />
+            </synchronizationPropertiesState>
+          </option>
+        </folderState>
+      </list>
+    </option>
+    <option name="id" value="7d0de526-0732-4ddd-a750-6e2a4771717f" />
+  </component>
+</project>
