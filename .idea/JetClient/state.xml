@@ -9,10 +9,24 @@
           <option name="requests">
             <list>
               <requestState>
+                <option name="body">
+                  <bodyState>
+                    <option name="raw" value="{&#10;  &quot;name&quot;: &quot;Thiago&quot;,&#10;  &quot;nick&quot;: &quot;garfnadeck3&quot;,&#10;  &quot;email&quot;: &quot;garfnadeck3@gmail.com&quot;,&#10;  &quot;password&quot;: &quot;123456&quot;&#10;}" />
+                    <option name="type" value="JSON" />
+                  </bodyState>
+                </option>
+                <option name="headers">
+                  <list>
+                    <headerState>
+                      <option name="key" value="Content-Type" />
+                      <option name="value" value="application/json" />
+                    </headerState>
+                  </list>
+                </option>
                 <option name="id" value="8498b2e0-2091-4e72-9b56-941453be9cdf" />
                 <option name="method" value="POST" />
                 <option name="name" value="GetAllUsers" />
-                <option name="url" value="http://localhost:8080/user" />
+                <option name="url" value="http://localhost:3000/user" />
               </requestState>
             </list>
           </option>
