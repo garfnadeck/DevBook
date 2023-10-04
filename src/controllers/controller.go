@@ -1,40 +1,47 @@
 package controllers
 
 import (
-	db2 "api/src/config/db"
+	"api/src/config/db"
 	"api/src/models"
 	"api/src/repository"
+	response_handler "api/src/response-handler"
 	"encoding/json"
-	"fmt"
 	"io"
-	"log"
 	"net/http"
 )
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
 	req, err := io.ReadAll(r.Body)
 	if err != nil {
-		log.Fatal(err)
+		response_handler.Error(w, http.StatusUnprocessableEntity, err)
+		return
 	}
 
 	var user models.User
 	if err = json.Unmarshal(req, &user); err != nil {
-		log.Fatal(err)
+		response_handler.Error(w, http.StatusBadRequest, err)
+		return
 	}
 
-	db, err := db2.ConnectDB()
-	if err != nil {
-		log.Fatal(err)
+	if err = user.Prepare(); err != nil {
+		response_handler.Error(w, http.StatusBadRequest, err)
+		return
 	}
+
+	db, err := db.ConnectDB()
+	if err != nil {
+		response_handler.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
 
 	repo := repository.UserRepository(db)
-	userID, err := repo.Create(user)
+	user.ID, err = repo.Create(user)
 	if err != nil {
-		log.Fatal(err)
+		response_handler.Error(w, http.StatusInternalServerError, err)
+		return
 	}
-	fmt.Println(userID)
-	w.Write([]byte(fmt.Sprintf("ID created: %d", userID)))
-
+	response_handler.JSON(w, http.StatusCreated, user)
 }
 
 func GetAllUsers(w http.ResponseWriter, r *http.Request) {

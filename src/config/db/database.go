@@ -13,7 +13,7 @@ func ConnectDB() (*sql.DB, error) {
 	}
 
 	if err = db.Ping(); err != nil {
-		db.Close()
+		err := db.Close()
 		return nil, err
 	}
 	return db, nil
