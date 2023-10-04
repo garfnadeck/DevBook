@@ -6,8 +6,11 @@ import (
 	"api/src/repository"
 	response_handler "api/src/response-handler"
 	"encoding/json"
+	"github.com/gorilla/mux"
 	"io"
 	"net/http"
+	"strconv"
+	"strings"
 )
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
@@ -35,8 +38,8 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	repo := repository.UserRepository(db)
-	user.ID, err = repo.Create(user)
+	repos := repository.UserRepository(db)
+	user.ID, err = repos.Create(user)
 	if err != nil {
 		response_handler.Error(w, http.StatusInternalServerError, err)
 		return
@@ -45,11 +48,46 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetAllUsers(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Get All User"))
+	nameOrNick := strings.ToLower(r.URL.Query().Get("user"))
+	db, err := db.ConnectDB()
+	if err != nil {
+		response_handler.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+	repos := repository.UserRepository(db)
+	users, err := repos.SearchUser(nameOrNick)
+	if err != nil {
+		response_handler.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	response_handler.JSON(w, http.StatusOK, users)
 }
 
 func GetSingleUser(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Get Single User"))
+	params := mux.Vars(r)
+
+	userID, err := strconv.ParseUint(params["userID"], 10, 64)
+	if err != nil {
+		response_handler.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	db, err := db.ConnectDB()
+	if err != nil {
+		response_handler.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+
+	repos := repository.UserRepository(db)
+	user, err := repos.SearchById(userID)
+	if err != nil {
+		response_handler.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	response_handler.JSON(w, http.StatusOK, user)
+
 }
 
 func UpdateUser(w http.ResponseWriter, r *http.Request) {

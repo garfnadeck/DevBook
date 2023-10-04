@@ -19,7 +19,7 @@ var userRoutes = []RouteStructure{
 		RequiredAuth: false,
 	},
 	{
-		URI:          "/users/{userId}",
+		URI:          "/user/{userID}",
 		Method:       http.MethodGet,
 		Func:         controllers.GetSingleUser,
 		RequiredAuth: false,
