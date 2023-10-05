@@ -26,7 +26,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err = user.Prepare(); err != nil {
+	if err = user.Prepare("register"); err != nil {
 		response_handler.Error(w, http.StatusBadRequest, err)
 		return
 	}
@@ -91,9 +91,62 @@ func GetSingleUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Update User"))
+	params := mux.Vars(r)
+	userID, err := strconv.ParseUint(params["userID"], 10, 64)
+	if err != nil {
+		response_handler.Error(w, http.StatusBadRequest, err)
+		return
+	}
+	req, err := io.ReadAll(r.Body)
+	if err != nil {
+		response_handler.Error(w, http.StatusUnprocessableEntity, err)
+		return
+	}
+
+	var user models.User
+	if err = json.Unmarshal(req, &user); err != nil {
+		response_handler.Error(w, http.StatusBadRequest, err)
+		return
+	}
+	if err = user.Prepare("editing"); err != nil {
+		response_handler.Error(w, http.StatusBadRequest, err)
+		return
+	}
+
+	db, err := db.ConnectDB()
+	if err != nil {
+		response_handler.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+
+	repo := repository.UserRepository(db)
+	if err = repo.UpdateUser(userID, user); err != nil {
+		response_handler.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	response_handler.JSON(w, http.StatusNoContent, nil)
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Update User"))
+	params := mux.Vars(r)
+	userID, err := strconv.ParseUint(params["userID"], 10, 64)
+	if err != nil {
+		response_handler.Error(w, http.StatusBadRequest, err)
+		return
+	}
+	db, err := db.ConnectDB()
+	if err != nil {
+		response_handler.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+
+	repo := repository.UserRepository(db)
+	if err = repo.DeleteUser(userID); err != nil {
+		response_handler.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	response_handler.JSON(w, http.StatusNoContent, nil)
+
 }

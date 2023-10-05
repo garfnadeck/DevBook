@@ -11,7 +11,7 @@
               <requestState>
                 <option name="body">
                   <bodyState>
-                    <option name="raw" value="{&#10;  &quot;name&quot;: &quot; Thiagos&quot;,&#10;  &quot;nick&quot;: &quot; garfnadeck2 &quot;,&#10;  &quot;email&quot;: &quot; garfnadeck2@gmail.com &quot;,&#10;  &quot;password&quot;: &quot;123456&quot;&#10;}" />
+                    <option name="raw" value="{&#10;  &quot;name&quot;: &quot; Susy&quot;,&#10;  &quot;nick&quot;: &quot; Susy &quot;,&#10;  &quot;email&quot;: &quot;susy@asd.com&quot;,&#10;  &quot;password&quot;: &quot;123456&quot;&#10;}" />
                     <option name="type" value="JSON" />
                   </bodyState>
                 </option>
@@ -45,7 +45,55 @@
                 <option name="id" value="bb6986ec-e8bb-4029-a61c-eec479e98988" />
                 <option name="method" value="GET" />
                 <option name="name" value="Get users" />
-                <option name="url" value="http://localhost:3000/users" />
+                <option name="queryParams">
+                  <list>
+                    <queryParamState>
+                      <option name="key" value="user" />
+                      <option name="value" value="u" />
+                    </queryParamState>
+                  </list>
+                </option>
+                <option name="url" value="http://localhost:3000/users?user=u" />
+              </requestState>
+              <requestState>
+                <option name="body">
+                  <bodyState>
+                    <option name="raw" value="{&#10;  &quot;name&quot;: &quot; Max&quot;,&#10;  &quot;nick&quot;: &quot; Max&quot;,&#10;  &quot;email&quot;: &quot; Max@gmail.com&quot;&#10;}" />
+                    <option name="type" value="JSON" />
+                  </bodyState>
+                </option>
+                <option name="headers">
+                  <list>
+                    <headerState>
+                      <option name="key" value="Content-Type" />
+                      <option name="value" value="application/json" />
+                    </headerState>
+                  </list>
+                </option>
+                <option name="id" value="a0ea7ad6-4eb1-43f4-8651-73db54b006be" />
+                <option name="method" value="PUT" />
+                <option name="name" value="Update User" />
+                <option name="url" value="http://localhost:3000/user/2" />
+              </requestState>
+              <requestState>
+                <option name="body">
+                  <bodyState>
+                    <option name="raw" value="{&#10;  &quot;name&quot;: &quot; Max&quot;,&#10;  &quot;nick&quot;: &quot; Max&quot;,&#10;  &quot;email&quot;: &quot; Max@gmail.com&quot;&#10;}" />
+                    <option name="type" value="JSON" />
+                  </bodyState>
+                </option>
+                <option name="headers">
+                  <list>
+                    <headerState>
+                      <option name="key" value="Content-Type" />
+                      <option name="value" value="application/json" />
+                    </headerState>
+                  </list>
+                </option>
+                <option name="id" value="579d30f8-2119-4da1-ae70-b46daf1cbab1" />
+                <option name="method" value="DELETE" />
+                <option name="name" value="Delete User" />
+                <option name="url" value="http://localhost:3000/user/2" />
               </requestState>
             </list>
           </option>
